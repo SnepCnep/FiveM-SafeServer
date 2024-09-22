@@ -72,7 +72,7 @@ Init.safeCreateProps = function(prop)
     CreatedProps[prop] = true
 end
 
-RegisterNetEvent("sc-safeServer:check:prop", function(entID)
+RegisterNetEvent("sc-safeServer:check:object", function(entID)
     local object = NetToObj(entID)
     local resource = GetEntityScript(object)
     local model = GetEntityModel(object)
@@ -83,10 +83,10 @@ RegisterNetEvent("sc-safeServer:check:prop", function(entID)
 
     if not CreatedProps[object] and resource ~= nil then
         DeleteEntity(object)
-        TriggerServerEvent("sc-safeServer:banPlayer", "Try to create prop with resource: " .. resource)
+        TriggerServerEvent("sc-safeServer:banPlayer", "Try to create object with resource: " .. resource)
     elseif not CreatedProps[object] then
         if IsEntityAttachedToEntity(object, GetPlayerPed(-1)) then
-            TriggerServerEvent("sc-safeServer:banPlayer", "Try to attach prop to player")
+            TriggerServerEvent("sc-safeServer:banPlayer", "Try to attach object to player")
         end
     elseif CreatedProps[object] then
         CreatedProps[object] = nil

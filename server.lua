@@ -85,6 +85,7 @@ AddEventHandler('entityCreated', function(entity)
     end
     
     TriggerClientEvent("sc-safeServer:check:".. entitytype, id, entID)
+    print("^1Entity: ^3" .. entitytype .. " ^1| ID: ^3" .. entID .. " ^1| Owner: ^3" .. id .. "^0")
 end)
 
 -- [//[In/Un-stallers]\\] --
