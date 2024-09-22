@@ -7,7 +7,12 @@ CreateThread(function()
 end)
 
 RegisterNetEvent("sc-safeServer:banPlayer", function(reason)
-    print("Player has been banned for reason: " .. reason)
+    if type(Config.BanFunction) == "function" then
+        Config.BanFunction(source, reason)
+    else
+        DropPlayer(source, reason)
+        print("Player ".. source .." has been banned for reason: " .. reason)
+    end
 end)
 
 -- [[ Server Events Protection ]] --

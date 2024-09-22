@@ -1,4 +1,3 @@
-
 -- [[ INIT ]] --
 local loaded = 0
 Init = {

@@ -54,7 +54,6 @@ if isServerSide then
         TriggerClientEvent('sc-safeServer:server:weaponactions', playerId, "clear")
         _RemoveAllPedWeapons(ped, p1)
     end
-
 end
 
 if isClientSide then
