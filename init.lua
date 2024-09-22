@@ -29,31 +29,6 @@ if isServerSide then
         _RegisterServerEvent(eventName, ...)
         table.insert(registeredProtEvents, eventName)
     end
-
-    local _GiveWeaponToPed = GiveWeaponToPed
-    local _RemoveWeaponFromPed = RemoveWeaponFromPed
-    local _RemoveAllPedWeapons = RemoveAllPedWeapons
-
-    ---@diagnostic disable-next-line: duplicate-set-field
-    _G.GiveWeaponToPed = function(ped, weaponHash, ammoCount, isHidden, equipNow)
-        local playerId = NetworkGetNetworkIdFromEntity(ped)
-        TriggerClientEvent('sc-safeServer:server:weaponactions', playerId, "add", (type(weaponHash) == "string" and GetHashKey(weaponHash) or weaponHash))
-        _GiveWeaponToPed(ped, weaponHash, ammoCount, isHidden, equipNow)
-    end
-
-    ---@diagnostic disable-next-line: duplicate-set-field
-    _G.RemoveWeaponFromPed = function(ped, weaponHash)
-        local playerId = NetworkGetNetworkIdFromEntity(ped)
-        TriggerClientEvent('sc-safeServer:server:weaponactions', playerId, "remove", (type(weaponHash) == "string" and GetHashKey(weaponHash) or weaponHash))
-        _RemoveWeaponFromPed(ped, weaponHash)
-    end
-
-    ---@diagnostic disable-next-line: duplicate-set-field
-    _G.RemoveAllPedWeapons = function(ped, p1)
-        local playerId = NetworkGetNetworkIdFromEntity(ped)
-        TriggerClientEvent('sc-safeServer:server:weaponactions', playerId, "clear")
-        _RemoveAllPedWeapons(ped, p1)
-    end
 end
 
 if isClientSide then
