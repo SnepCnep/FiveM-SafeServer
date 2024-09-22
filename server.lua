@@ -11,7 +11,7 @@ RegisterNetEvent("sc-safeServer:banPlayer", function(reason)
         Config.BanFunction(source, reason)
     else
         DropPlayer(source, reason)
-        print("Player ".. source .." has been banned for reason: " .. reason)
+        print("^1Speler: ^3" .. source .. " ^1 | Is verbannen voor Reden: ^3" .. reason .. "^0")
     end
 end)
 
@@ -20,15 +20,16 @@ RegisterNetEvent("onResourceStart", function(res)
     if res == "sc-safeServer" then
         return
     end
+    
     TriggerEvent("sc-safeServer:request:eventNames", res)
 end)
 
 local defaultWhitelistedEvents = {
-    ["__cfx_internal:commandFallback"] = true,
-    ["_chat:messageEntered"] = true
+    "__cfx_internal:commandFallback",
+    "_chat:messageEntered"
 }
 
-for eventName in pairs(defaultWhitelistedEvents) do
+for _, eventName in ipairs(defaultWhitelistedEvents) do
     Config.WhiteListedEvents[eventName] = true
 end
 

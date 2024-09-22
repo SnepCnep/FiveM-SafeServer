@@ -46,7 +46,6 @@ if isClientSide then
 
     local _TriggerServerEvent = TriggerServerEvent
 
-
     ---@diagnostic disable-next-line: duplicate-set-field
     _G.TriggerServerEvent = function(eventName, ...)
         local success, err
