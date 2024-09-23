@@ -54,7 +54,7 @@ local function banPlayer(source, reason)
     bannedPlayers[tostring(banID)] = banData
 
     SaveResourceFile(GetCurrentResourceName(), "src/data/bans.json", json.encode(bannedPlayers, { indent = true }), -1)
-    DropPlayer(source, reason)
+    DropPlayer(source, "You have been banned from this server. Ban ID: " .. banID)
     print("^1BanPlayer^7 - Source: ^5" ..source .. " ^7- Name: ^5" .. banData["name"] .. " ^7- Reason: ^5" .. reason)
 end
 
@@ -226,7 +226,7 @@ RegisterCommand("safeServer:unban", function(source, args)
         local bandata = bannedPlayers[tostring(banId)]
         bannedPlayers[tostring(banId)] = nil
         SaveResourceFile(GetCurrentResourceName(), "src/data/bans.json", json.encode(bannedPlayers, { indent = true }), -1)
-        print("Player " .. bandata["name"] .. " has been unbanned!")
+        print("^1Player ^2" .. bandata["name"] .. " ^1has been unbanned!^7")
     else
         print("This player is not banned!")
     end
@@ -245,7 +245,13 @@ RegisterCommand("safeServer:baninfo", function(source, args)
     end
 
     if bannedPlayers[tostring(banId)] then
-        print(json.encode(bannedPlayers[tostring(banId)], { indent = true }))
+        local bandata = bannedPlayers[tostring(banId)]
+        print("^1---------------------------------------------------^7")
+        print("^1Ban ID: ^7" .. bandata["banId"])
+        print("^1Name: ^7" .. bandata["name"])
+        print("^1Reason: ^7" .. bandata["reason"])
+        print("^1Banned on: ^7" .. bandata["datum"])
+        print("^1---------------------------------------------------^7")
     else
         print("This player is not banned!")
     end

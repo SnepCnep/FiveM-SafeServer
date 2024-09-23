@@ -1,20 +1,22 @@
+
+---@diagnostic disable-next-line: lowercase-global
+_print = print
+function print(message)
+    if not message or type(message) ~= "string" then
+        _print("^7[^5SafeServer^7] ^4- ^7Invalid message^7")
+        return
+            end
+            _print("^7[^5SafeServer^7] ^4- ^7" .. message .. "^7")
+        end
+
 CreateThread(function()
     while not GetResourceState("sc-safeServer") == "started" do
         Wait(500)
     end
 
     TriggerEvent("sc-safeServer:request:eventNames", "all")
+    print("^2has been started!")
 end)
-
----@diagnostic disable-next-line: lowercase-global
-_print = print
-function print(message)
-    if not message or type(message) ~= "string" then
-        _print("^7[^5ANTICHEAT^7] ^4- ^7Invalid message^7")
-        return
-    end
-    _print("^7[^5ANTICHEAT^7] ^4- ^7" .. message .. "^7")
-end
 
 -- [[ Server Events Protection ]] --
 RegisterNetEvent("onResourceStart", function(res)
