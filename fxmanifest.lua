@@ -7,12 +7,13 @@ version '1.0.0'
 lua54 'yes'
 
 client_scripts {
-    'client.lua',
+    'src/client/main.lua',
 }
 
 server_scripts {
     'config.lua',
-    'server.lua',
+    'src/server/main.lua',
+    'src/server/banhandler.lua',
 }
 
 files {

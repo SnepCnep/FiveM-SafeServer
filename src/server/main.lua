@@ -6,14 +6,15 @@ CreateThread(function()
     TriggerEvent("sc-safeServer:request:eventNames", "all")
 end)
 
-RegisterNetEvent("sc-safeServer:banPlayer", function(reason)
-    if type(Config.BanFunction) == "function" then
-        Config.BanFunction(source, reason)
-    else
-        DropPlayer(source, reason)
-        print("^1Speler: ^3" .. source .. " ^1 | Is verbannen voor Reden: ^3" .. reason .. "^0")
+---@diagnostic disable-next-line: lowercase-global
+_print = print
+function print(message)
+    if not message or type(message) ~= "string" then
+        _print("^7[^5ANTICHEAT^7] ^4- ^7Invalid message^7")
+        return
     end
-end)
+    _print("^7[^5ANTICHEAT^7] ^4- ^7" .. message .. "^7")
+end
 
 -- [[ Server Events Protection ]] --
 RegisterNetEvent("onResourceStart", function(res)

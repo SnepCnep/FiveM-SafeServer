@@ -1,4 +1,8 @@
 Config = {}
+Config.Debugger = false
+
+Config.ServerName = "ACE Roleplay"
+Config.SupportDiscord = ""
 
 Config.WhitelistedResource = {
     ["monitor"] = true
@@ -7,9 +11,3 @@ Config.WhitelistedResource = {
 Config.WhiteListedEvents = {
     [""] = true
 }
-
-Config.BanFunction = false
--- Config.BanFunction = function(source, reason)
---     DropPlayer(source, reason)
---     print("Player ".. source .." has been banned for reason: " .. reason)
--- end
