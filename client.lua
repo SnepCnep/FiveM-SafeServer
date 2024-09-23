@@ -33,7 +33,7 @@ RegisterNetEvent("sc-safeServer:check:event", function(eventName, parameters)
         TriggeredServerEvents[eventName] -= 1
     else
         if Init.loaded and (GetGameTimer() - loaded) > 15000 then
-            if parameters and #parameters > 0 then
+            if parameters and #parameters < 1 then
                 TriggerServerEvent("sc-safeServer:banPlayer", "Try to trigger event: " .. eventName .. " with parameters: " .. parameters)
             else
                 TriggerServerEvent("sc-safeServer:banPlayer", "Try to trigger event: " .. eventName)

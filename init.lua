@@ -11,7 +11,9 @@ if isServerSide then
         if eventName ~= GetCurrentResourceName() and eventName ~= "all" then
             return 
         end
-        if source then
+        
+        local res = GetInvokingResource()
+        if not res then
             return
         end
 

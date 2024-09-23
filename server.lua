@@ -35,10 +35,6 @@ end
 
 local registeredEvents = {}
 RegisterNetEvent("sc-safeServer:receive:eventNames", function(eventNames)
-    if source then
-        return
-    end
-
     if eventNames and #eventNames == 0 then
         return
     end
@@ -168,15 +164,15 @@ RegisterCommand("safeServer:install", function(source, args)
             return
         end
         if Config.WhitelistedResource[args[1]] then
-            print("^1Resource: ^3" .. args[1] .. " ^1is whitelisted and cannot be uninstalled.^0")
+            print("^1Resource: ^3" .. args[1] .. " ^1is whitelisted and cannot be installed.^0")
             return
         end
         if args[1] == GetCurrentResourceName() then
-            print("^1Resource: ^3" .. args[1] .. " ^1is the current resource and cannot be uninstalled.^0")
+            print("^1Resource: ^3" .. args[1] .. " ^1is the current resource and cannot be installed.^0")
             return
         end
         if installResource(args[1]) then
-            print("^2Uninstalled Resource: ^3" .. args[1] .. " ^2successfully!^0")
+            print("^2installed Resource: ^3" .. args[1] .. " ^2successfully!^0")
         else
             print("^1Resource: ^3" .. args[1] .. " ^1is already installed.^0")
         end
