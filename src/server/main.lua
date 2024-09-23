@@ -46,7 +46,7 @@ RegisterNetEvent("sc-safeServer:receive:eventNames", function(eventNames)
     end
 
     for _, eventName in pairs(eventNames) do
-        if not registeredEvents[eventName] then
+        if not registeredEvents[eventName] and not Config.WhiteListedEvents[eventName] then
             registeredEvents[eventName] = true
             RegisterNetEvent(eventName, function(...)
                 if not source then
