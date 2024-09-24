@@ -144,7 +144,6 @@ local function blockBan(deferrals, banID, playerName)
                 ["type"] = "ColumnSet",
                 ["horizontalAlignment"] = "Center",
                 ["columns"] = {
-                    
                     {
                         ["type"] = "Column",
                         ["width"] = "auto",
@@ -154,6 +153,24 @@ local function blockBan(deferrals, banID, playerName)
                                 ["actions"] = {
                                     {
                                         ["type"] = "Action.OpenUrl",
+                                        ["title"] = "snepcnep"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    {
+                        ["type"] = "Column",
+                        ["width"] = "auto",
+                        ["items"] = {
+                            {
+                                ["type"] = "ActionSet",
+                                ["actions"] = {
+                                    {
+                                        ["type"] = "Action.Submit",
+                                        ["data"] = {
+                                            ["banId"] = banID
+                                        },
                                         ["title"] = "Ban ID: ".. banID 
                                     }
                                 }
