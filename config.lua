@@ -1,7 +1,7 @@
 Config = {}
 Config.Debugger = false
 
-Config.ServerName = "ACE Roleplay"
+Config.ServerName = "Fortis Roleplay"
 Config.SupportDiscord = ""
 
 Config.WhitelistedResource = {

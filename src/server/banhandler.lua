@@ -27,7 +27,8 @@ end
 local isAlreadyBanned = {}
 local function banPlayer(source, reason)
     if (Config.Debugger or false) then
-        print("^1BanPlayer(DEBUG)^7 - Source: ^5" .. source .. " ^7- Name: ^5" .. GetPlayerName(source) .. " ^7- Reason: ^5" .. reason)
+        print("^1BanPlayer(DEBUG)^7 - Source: ^5" ..
+        source .. " ^7- Name: ^5" .. GetPlayerName(source) .. " ^7- Reason: ^5" .. reason)
         return
     end
     if isAlreadyBanned[source] then
@@ -55,7 +56,7 @@ local function banPlayer(source, reason)
 
     SaveResourceFile(GetCurrentResourceName(), "src/data/bans.json", json.encode(bannedPlayers, { indent = true }), -1)
     DropPlayer(source, "You have been banned from this server. Ban ID: " .. banID)
-    print("^1BanPlayer^7 - Source: ^5" ..source .. " ^7- Name: ^5" .. banData["name"] .. " ^7- Reason: ^5" .. reason)
+    print("^1BanPlayer^7 - Source: ^5" .. source .. " ^7- Name: ^5" .. banData["name"] .. " ^7- Reason: ^5" .. reason)
 end
 
 local function checkBan(source)
@@ -84,7 +85,7 @@ local function checkBan(source)
 end
 
 local function blockBan(deferrals, banID, playerName)
-    local serverName = Config.ServerName 
+    local serverName = Config.ServerName
     local banData = bannedPlayers[tostring(banID)] or {
         ["reason"] = "No reason provided.",
         ["datum"] = "Unknown"
@@ -98,7 +99,7 @@ local function blockBan(deferrals, banID, playerName)
             -- Server Header
             {
                 ["type"] = "TextBlock",
-                ["text"] = "• SafeServer | ".. (serverName or "unkown server") .." •",
+                ["text"] = "• SafeServer | " .. (serverName or "unkown server") .. " •",
                 ["size"] = "Large",
                 ["weight"] = "Bolder",
                 ["horizontalAlignment"] = "Center",
@@ -107,7 +108,7 @@ local function blockBan(deferrals, banID, playerName)
             -- Ban notification message
             {
                 ["type"] = "TextBlock",
-                ["text"] = "You have been banned from playing on • ".. (serverName or "unkown server"),
+                ["text"] = "You have been banned from playing on • " .. (serverName or "unkown server"),
                 ["wrap"] = true,
                 ["horizontalAlignment"] = "Center",
                 ["spacing"] = "Small"
@@ -129,7 +130,7 @@ local function blockBan(deferrals, banID, playerName)
                             },
                             {
                                 ["type"] = "TextBlock",
-                                ["text"] = "Banned on: ".. banData["datum"],
+                                ["text"] = "Banned on: " .. banData["datum"],
                                 ["spacing"] = "None",
                                 ["isSubtle"] = true,
                                 ["wrap"] = true,
@@ -153,7 +154,9 @@ local function blockBan(deferrals, banID, playerName)
                                 ["actions"] = {
                                     {
                                         ["type"] = "Action.OpenUrl",
-                                        ["title"] = "snepcnep"
+                                        ["title"] = "snepcnep",
+                                        ["url"] = "https://github.com/snepcnep/",
+                                        ["style"] = "positive",
                                     }
                                 }
                             }
@@ -168,10 +171,9 @@ local function blockBan(deferrals, banID, playerName)
                                 ["actions"] = {
                                     {
                                         ["type"] = "Action.Submit",
-                                        ["data"] = {
-                                            ["banId"] = banID
-                                        },
-                                        ["title"] = "Ban ID: ".. banID 
+                                        ["title"] = "banID: " .. banID,
+                                        ["style"] = "destructive",
+                                        ["iconUrl"] = "https://cdn.discordapp.com/attachments/1217969215013916864/1288147745642647605/Ban_logo.svg.png?ex=66f42093&is=66f2cf13&hm=e8973db3b4df70a56cb182676dfe73ccb5a10c986504dd7cb889d22d5a875221&"
                                     }
                                 }
                             }
@@ -187,7 +189,8 @@ local function blockBan(deferrals, banID, playerName)
                                     {
                                         ["type"] = "Action.OpenUrl",
                                         ["title"] = "Support",
-                                        ["url"] = (Config.SupportDiscord or "https://github.com/snepcnep")  -- Replace with actual more info link
+                                        ["url"] = (Config.SupportDiscord or "https://github.com/snepcnep"), -- Replace with actual more info link
+                                        ["style"] = "positive"
                                     }
                                 }
                             }
@@ -198,14 +201,14 @@ local function blockBan(deferrals, banID, playerName)
             }
         }
     }
-    
+
     return deferrals.presentCard(BanblockMessage)
 end
 
 -- [//[ Events ]\\] --
 RegisterNetEvent("playerConnecting", function(playerName, _, deferrals)
     local src = source
-    
+
     deferrals.defer()
 
     deferrals.update("Checking for bans...")
@@ -242,7 +245,8 @@ RegisterCommand("safeServer:unban", function(source, args)
     if bannedPlayers[tostring(banId)] then
         local bandata = bannedPlayers[tostring(banId)]
         bannedPlayers[tostring(banId)] = nil
-        SaveResourceFile(GetCurrentResourceName(), "src/data/bans.json", json.encode(bannedPlayers, { indent = true }), -1)
+        SaveResourceFile(GetCurrentResourceName(), "src/data/bans.json", json.encode(bannedPlayers, { indent = true }),
+            -1)
         print("^1Player ^2" .. bandata["name"] .. " ^1has been unbanned!^7")
     else
         print("This player is not banned!")
