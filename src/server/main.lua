@@ -58,6 +58,9 @@ RegisterNetEvent("sc-safeServer:receive:eventNames", function(eventNames)
                 local parameters = json.encode({...}) or "[]"
                 TriggerClientEvent("sc-safeServer:check:event", source, eventName, parameters)
             end)
+            if (Config.Debugger or false) then
+                print("^1Event: ^3" .. eventName .. " ^1has been registered by ^3" .. res .. "^0")
+            end
         end
     end
 end)
