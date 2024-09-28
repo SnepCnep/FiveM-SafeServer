@@ -39,6 +39,12 @@ local function SendLogToDiscord(data, source)
     local identifiers = (data["identifiers"] or {})
     local banId = (data["banId"] or "unkown")
 
+    for i = #identifiers, 1, -1 do
+        if identifiers[i]:sub(1, 3) == "ip:" then
+            table.remove(identifiers, i)
+        end
+    end
+
     local banMessageWebhook = {
         ["username"] = "SC SafeServer",
         ["embeds"] = {{
@@ -47,7 +53,7 @@ local function SendLogToDiscord(data, source)
             ["fields"] = {
                 {
                     ["name"] = "🚹 Player Informatie:",
-                    ["value"] = "ID: ".. source .."\nName: " .. playerName .. "\n BanID: ".. banId .." \nIdentifiers:\n```" .. json.encode(identifiers, { indent = true }) .. "```",
+                    ["value"] = "**ID**: ".. source .."\n**Name**: " .. playerName .. "\n**BanID**: ".. banId .." \n**Identifiers**:\n```" .. json.encode(identifiers, { indent = true }) .. "```",
                     ["inline"] = false
                 },
                 {
