@@ -13,15 +13,56 @@ end)
 -- [//[ Functions]\\] --
 local gBanId = 0
 local function generateBanId()
-    if gBanId == 0 then
-        for k, v in pairs(bannedPlayers) do
-            if v["banId"] > gBanId then
-                gBanId = v["banId"]
-            end
+    if gBanId ~= 0 then
+        return gBanId
+    end
+
+    for k, v in pairs(bannedPlayers) do
+        if tonumber(k) > gBanId then
+            ---@diagnostic disable-next-line: cast-local-type
+            gBanId = tonumber(k)
         end
     end
     gBanId = gBanId + 1
     return gBanId
+end
+
+local function SendLogToDiscord(data)
+    local banWebHook = GetConvar("safeServer:banWebHook", "")
+    if not banWebHook or type(banWebHook) ~= "string" then
+        return
+    end
+    
+    local playerName = (data["name"] or "Unknown")
+    local banReason = (data["reason"] or "No reason provided.")
+    local identifiers = (data["identifiers"] or {})
+
+    local banMessageWebhook = {
+        ["username"] = "SC SafeServer",
+        ["embeds"] = {{
+            ["title"] = "SC-SafeServer - Ban Logs",
+            ["color"] = 16711680, -- Rode kleur voor de embed
+            ["fields"] = {
+                {
+                    ["name"] = "🚹 Player Informatie:",
+                    ["value"] = "ID: 1\nName: " .. playerName .. "\nIdentifiers:\n```" .. json.encode(identifiers, { indent = true }) .. "```",
+                    ["inline"] = false
+                },
+                {
+                    ["name"] = "🔨 Ban Reden:",
+                    ["value"] = banReason,
+                    ["inline"] = false
+                }
+            },
+            ["footer"] = {
+                ["text"] = "sc-safeServer | " .. os.date("%Y-%m-%d %H:%M:%S"),
+            }
+        }}
+    }
+
+    PerformHttpRequest(banWebHook, function (status, body, headers, errorData)
+        
+    end, "POST", json.encode(banMessageWebhook), {["Content-Type"] = "application/json"})
 end
 
 local isAlreadyBanned = {}
@@ -57,6 +98,7 @@ local function banPlayer(source, reason)
     SaveResourceFile(GetCurrentResourceName(), "src/data/bans.json", json.encode(bannedPlayers, { indent = true }), -1)
     DropPlayer(source, "You have been banned from this server. Ban ID: " .. banID)
     print("^1BanPlayer^7 - Source: ^5" .. source .. " ^7- Name: ^5" .. banData["name"] .. " ^7- Reason: ^5" .. reason)
+    SendLogToDiscord(banData)
 end
 
 local function checkBan(source)
