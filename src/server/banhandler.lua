@@ -27,15 +27,17 @@ local function generateBanId()
     return gBanId
 end
 
-local function SendLogToDiscord(data)
+local function SendLogToDiscord(data, source)
     local banWebHook = GetConvar("safeServer:banWebHook", "")
     if not banWebHook or type(banWebHook) ~= "string" then
         return
     end
-    
+
+    local source = (source or "not found")
     local playerName = (data["name"] or "Unknown")
     local banReason = (data["reason"] or "No reason provided.")
     local identifiers = (data["identifiers"] or {})
+    local banId = (data["banId"] or "unkown")
 
     local banMessageWebhook = {
         ["username"] = "SC SafeServer",
@@ -45,7 +47,7 @@ local function SendLogToDiscord(data)
             ["fields"] = {
                 {
                     ["name"] = "🚹 Player Informatie:",
-                    ["value"] = "ID: 1\nName: " .. playerName .. "\nIdentifiers:\n```" .. json.encode(identifiers, { indent = true }) .. "```",
+                    ["value"] = "ID: ".. source .."\nName: " .. playerName .. "\n BanID: ".. banId .." \nIdentifiers:\n```" .. json.encode(identifiers, { indent = true }) .. "```",
                     ["inline"] = false
                 },
                 {
@@ -98,7 +100,7 @@ local function banPlayer(source, reason)
     SaveResourceFile(GetCurrentResourceName(), "src/data/bans.json", json.encode(bannedPlayers, { indent = true }), -1)
     DropPlayer(source, "You have been banned from this server. Ban ID: " .. banID)
     print("^1BanPlayer^7 - Source: ^5" .. source .. " ^7- Name: ^5" .. banData["name"] .. " ^7- Reason: ^5" .. reason)
-    SendLogToDiscord(banData)
+    SendLogToDiscord(banData, source)
 end
 
 local function checkBan(source)
