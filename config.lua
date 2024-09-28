@@ -5,7 +5,7 @@ Config.ServerName = "Fortis Roleplay"
 Config.SupportDiscord = ""
 
 Config.WhitelistedResource = {
-    ["monitor"] = true
+    ["monitor"] = true,
 }
 
 Config.WhiteListedEvents = {

@@ -64,4 +64,35 @@ if isClientSide then
 
         _TriggerServerEvent(eventName, ...)
     end
+
+    local _CreateObject = CreateObject
+    local _CreatePed = CreatePed
+    local _CreateVehicle = CreateVehicle
+
+    ---@diagnostic disable-next-line: duplicate-set-field
+    _G.CreateObject = function(modelHash, x, y, z, isNetwork, thisScriptCheck)
+        local ent = _CreateObject(modelHash, x, y, z, isNetwork, thisScriptCheck)
+        if ent ~= 0 and core and core.safeCreateProps then
+            core.safeCreateProps(ent)
+        end
+        return ent
+    end
+
+    ---@diagnostic disable-next-line: duplicate-set-field
+    _G.CreatePed = function(pedType, modelHash, x, y, z, heading, isNetwork, thisScriptCheck)
+        local ent = _CreatePed(pedType, modelHash, x, y, z, heading, isNetwork, thisScriptCheck)
+        if ent ~= 0 and core and core.safeCreatePeds then
+            core.safeCreatePeds(ent)
+        end
+        return ent
+    end
+
+    ---@diagnostic disable-next-line: duplicate-set-field
+    _G.CreateVehicle = function(modelHash, x, y, z, heading, isNetwork, thisScriptCheck)
+        local ent = _CreateVehicle(modelHash, x, y, z, heading, isNetwork, thisScriptCheck)
+        if ent ~= 0 and core and core.safeCreateVehicles then
+            core.safeCreateVehicles(ent)
+        end
+        return ent
+    end
 end

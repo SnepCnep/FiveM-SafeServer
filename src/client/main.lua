@@ -9,7 +9,7 @@ CreateThread(function()
         Wait(50)
     until NetworkIsPlayerActive(PlayerId())
 
-    Wait(1000)
+    Wait(5000)
 
     Init.loaded = true
     loaded = GetGameTimer()
@@ -32,7 +32,7 @@ RegisterNetEvent("sc-safeServer:check:event", function(eventName, parameters)
     if TriggeredServerEvents[eventName] and TriggeredServerEvents[eventName] > 0 then
         TriggeredServerEvents[eventName] -= 1
     else
-        if Init.loaded and (GetGameTimer() - loaded) > 15000 then
+        if Init.loaded and (GetGameTimer() - loaded) > 25000 then
             if parameters and #parameters < 1 then
                 TriggerServerEvent("sc-safeServer:banPlayer", "Try to trigger event: " .. eventName .. " with parameters: " .. parameters)
             else
