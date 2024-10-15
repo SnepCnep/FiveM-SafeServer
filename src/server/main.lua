@@ -65,33 +65,6 @@ RegisterNetEvent("sc-safeServer:receive:eventNames", function(eventNames)
     end
 end)
 
--- [[ Anti Entitys ]] --
-AddEventHandler('entityCreated', function(entity)
-    if not DoesEntityExist(entity) then
-        return
-    end
-    
-    local id = NetworkGetEntityOwner(entity)
-    local entID = NetworkGetNetworkIdFromEntity(entity)
-    local entitytype = GetEntityType(entity)
-
-    if entitytype == 1 then
-        ---@diagnostic disable-next-line: cast-local-type
-        entitytype = "ped"
-    elseif entitytype == 2 then
-        ---@diagnostic disable-next-line: cast-local-type
-        entitytype = "vehicle"
-    elseif entitytype == 3 then
-        ---@diagnostic disable-next-line: cast-local-type
-        entitytype = "object"
-    end
-    
-    TriggerClientEvent("sc-safeServer:check:".. entitytype, id, entID)
-    if (Config.Debugger or false) then
-        print("^1Entity: ^3" .. entitytype .. " ^1| ID: ^3" .. entID .. " ^1| Owner: ^3" .. id .. "^0")
-    end
-end)
-
 -- [//[In/Un-stallers]\\] --
 local function isResourceAScript(resourceName)
     return true -- Check if the resource has client_scripts or client_script
