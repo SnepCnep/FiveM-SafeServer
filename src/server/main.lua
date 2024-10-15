@@ -5,9 +5,10 @@ function print(message)
     if not message or type(message) ~= "string" then
         _print("^7[^5SafeServer^7] ^4- ^7Invalid message^7")
         return
-            end
-            _print("^7[^5SafeServer^7] ^4- ^7" .. message .. "^7")
-        end
+    end
+    
+    _print("^7[^5SafeServer^7] ^4- ^7" .. message .. "^7")
+end
 
 CreateThread(function()
     while not GetResourceState("sc-safeServer") == "started" do
